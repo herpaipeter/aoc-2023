@@ -2,7 +2,7 @@
 
 import pathlib
 import pytest
-import src.day01.solution_day01 as solution
+import src.day01.day01 as solution
 
 PUZZLE_DIR = pathlib.Path(__file__).parent
 
@@ -16,12 +16,6 @@ def example1():
 @pytest.fixture
 def example2():
     puzzle_input = (PUZZLE_DIR / "example2.txt").read_text().strip()
-    return solution.parse(puzzle_input)
-
-
-@pytest.fixture
-def input():
-    puzzle_input = (PUZZLE_DIR / "input.txt").read_text().strip()
     return solution.parse(puzzle_input)
 
 
