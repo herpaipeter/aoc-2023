@@ -2,7 +2,7 @@ import pathlib
 import pytest
 import src.day03.day03 as day03
 from src.common.point import Point
-from src.day03.position import NumberPosition, SymbolPosition
+from src.day03.engine_part import EngineNumber, EngineSymbol
 
 PUZZLE_DIR = pathlib.Path(__file__).parent
 
@@ -21,86 +21,86 @@ def test_one_dot_line_returns_empty():
 
 def test_one_num_line_returns_one_num_with_0_position():
     result = day03.Day03().parseLine("1", 0)
-    assert [NumberPosition(1, Point(0, 0), Point(0, 0))] == result
+    assert [EngineNumber(1, Point(0, 0), Point(0, 0))] == result
 
 
 def test_one_num_and_dot_line_returns_one_num_with_0_position():
     result = day03.Day03().parseLine("1.", 0)
-    assert [NumberPosition(1, Point(0, 0), Point(0, 0))] == result
+    assert [EngineNumber(1, Point(0, 0), Point(0, 0))] == result
 
 
 def test_one_dot_and_num_line_returns_one_num_with_1_position():
     result = day03.Day03().parseLine(".1", 0)
-    assert [NumberPosition(1, Point(0, 1), Point(0, 1))] == result
+    assert [EngineNumber(1, Point(0, 1), Point(0, 1))] == result
 
 
 def test_two_digit_returns_one_num_with_two_diff_position():
     result = day03.Day03().parseLine("12", 0)
-    assert [NumberPosition(12, Point(0, 0), Point(0, 1))] == result
+    assert [EngineNumber(12, Point(0, 0), Point(0, 1))] == result
 
 
-def test_two_numbers_returns_two_numberposition():
+def test_two_numbers_returns_two_enginenumber():
     result = day03.Day03().parseLine("467..114..", 0)
-    assert [NumberPosition(467, Point(0, 0), Point(0, 2)),
-            NumberPosition(114, Point(0, 5), Point(0, 7))] == result
+    assert [EngineNumber(467, Point(0, 0), Point(0, 2)),
+            EngineNumber(114, Point(0, 5), Point(0, 7))] == result
 
 
-def test_one_symbol_returns_one_symbolposition():
+def test_one_symbol_returns_one_enginesymbol():
     result = day03.Day03().parseLine("*", 0)
-    assert [SymbolPosition("*", Point(0, 0))] == result
+    assert [EngineSymbol("*", Point(0, 0))] == result
 
 
 def test_parse_mixed_line():
     result = day03.Day03().parseLine("617+2.....", 1)
-    assert [NumberPosition(617, Point(1, 0), Point(1, 2)),
-            SymbolPosition("+", Point(1, 3)),
-            NumberPosition(2, Point(1, 4), Point(1, 4))] == result
+    assert [EngineNumber(617, Point(1, 0), Point(1, 2)),
+            EngineSymbol("+", Point(1, 3)),
+            EngineNumber(2, Point(1, 4), Point(1, 4))] == result
 
 
 def test_check_near_symbol():
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(1, 0), Point(1, 2)), []) is False
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(1, 0), Point(1, 2)), []) is False
 
 
 def test_after_symbol():
-    symbols = [SymbolPosition("+", Point(1, 3))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(1, 0), Point(1, 2)),
-                                            symbols) is True
+    symbols = [EngineSymbol("+", Point(1, 3))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(1, 0), Point(1, 2)),
+                                                   symbols) is True
 
 
 def test_before_symbol():
-    symbols = [SymbolPosition("+", Point(1, 0))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(1, 1), Point(1, 3)),
-                                            symbols) is True
+    symbols = [EngineSymbol("+", Point(1, 0))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(1, 1), Point(1, 3)),
+                                                   symbols) is True
 
 
 def test_not_next_to_because_of_rows():
-    symbols = [SymbolPosition("+", Point(0, 0))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(2, 1), Point(2, 3)),
-                                            symbols) is False
+    symbols = [EngineSymbol("+", Point(0, 0))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(2, 1), Point(2, 3)),
+                                                   symbols) is False
 
 
 def test_next_to_in_previous_row():
-    symbols = [SymbolPosition("+", Point(1, 0))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(2, 1), Point(2, 3)),
-                                            symbols) is True
+    symbols = [EngineSymbol("+", Point(1, 0))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(2, 1), Point(2, 3)),
+                                                   symbols) is True
 
 
 def test_next_to_in_next_row():
-    symbols = [SymbolPosition("+", Point(3, 0))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(2, 1), Point(2, 3)),
-                                            symbols) is True
+    symbols = [EngineSymbol("+", Point(3, 0))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(2, 1), Point(2, 3)),
+                                                   symbols) is True
 
 
 def test_next_to_in_next_row_and_between():
-    symbols = [SymbolPosition("+", Point(3, 1))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(2, 1), Point(2, 3)),
-                                            symbols) is True
+    symbols = [EngineSymbol("+", Point(3, 1))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(2, 1), Point(2, 3)),
+                                                   symbols) is True
 
 
 def test_next_to_in_next_row_and_between_upper():
-    symbols = [SymbolPosition("+", Point(3, 3))]
-    assert day03.Day03().is_next_to_symbols(NumberPosition(617, Point(2, 1), Point(2, 3)),
-                                            symbols) is True
+    symbols = [EngineSymbol("+", Point(3, 3))]
+    assert day03.Day03().is_adjacent_to_any_symbol(EngineNumber(617, Point(2, 1), Point(2, 3)),
+                                                   symbols) is True
 
 
 @pytest.fixture
