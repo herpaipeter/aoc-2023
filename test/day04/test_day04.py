@@ -5,7 +5,7 @@ import src.day04.day04 as day04
 PUZZLE_DIR = pathlib.Path(__file__).parent
 
 
-def test_input_parseLine():
+def test_input_parse_line():
     card = day04.Day04().parseLine("Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53")
     assert card.winning_numbers == [41, 48, 83, 86, 17]
     assert card.numbers == [83, 86, 6, 31, 17, 9, 48, 53]

@@ -14,7 +14,7 @@ class EngineNumber:
     def __eq__(self, __o):
         if isinstance(__o, EngineNumber):
             return self.number == __o.number and self.start == __o.start and self.end == __o.end
-        return NotImplemented
+        raise NotImplementedError
 
 
 class EngineSymbol:
@@ -29,4 +29,4 @@ class EngineSymbol:
     def __eq__(self, __o):
         if isinstance(__o, EngineSymbol):
             return self.symbol == __o.symbol and self.position == __o.position
-        return NotImplemented
+        raise NotImplementedError

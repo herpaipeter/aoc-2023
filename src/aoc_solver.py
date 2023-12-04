@@ -9,6 +9,7 @@ from typing import Any
 logging.basicConfig(format="%(asctime)s.%(msecs)03d:%(levelname)s:%(name)s:\t%(message)s",
                     datefmt='%H:%M:%S')
 
+
 class AocSolver(ABC):
 
     def __init__(self, classname):
