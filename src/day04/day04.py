@@ -19,6 +19,10 @@ class Card:
 
 @runifmain(__name__)
 class Day04(AocSolver):
+
+    def __init__(self):
+        super().__init__(__class__.__name__)
+
     def parse(self, input_data) -> Any:
         lines = input_data.split('\n')
         return list(map(lambda line: self.parseLine(line), lines))

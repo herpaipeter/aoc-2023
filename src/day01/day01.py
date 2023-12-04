@@ -26,6 +26,9 @@ def summa(str_list):
 class Day01(AocSolver):
     num_words = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
+    def __init__(self):
+        super().__init__(__class__.__name__)
+
     def prefix_number_words_with_digit(self, text):
         result = ""
         for i in range(0, len(text)):

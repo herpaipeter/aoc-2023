@@ -15,6 +15,9 @@ def append_number_and_reset(number, row, pos_end, pos_start, obj_list):
 
 @runifmain(__name__)
 class Day03(AocSolver):
+    def __init__(self):
+        super().__init__(__class__.__name__)
+
     def parse(self, input_data) -> Any:
         lines = input_data.split('\n')
         numbers_symbols_lines = [self.parseLine(line, row) for row, line in enumerate(lines)]

@@ -19,6 +19,10 @@ class CubeSet:
 
 @runifmain(__name__)
 class Day02(AocSolver):
+
+    def __init__(self):
+        super().__init__(__class__.__name__)
+
     def parse(self, input_data):
         """Parse input."""
         games = []
