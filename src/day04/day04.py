@@ -3,18 +3,15 @@ from typing import Any
 
 from src.aoc_solver import runifmain, AocSolver
 
+
 @dataclass
 class Card:
     winning_numbers: list
     numbers: list
 
     def point(self) -> int:
-        if 0 < len(self.winning_numbers) and 0 < len(self.numbers):
-            result = 0
-            for win_num in self.winning_numbers:
-                result += self.numbers.count(win_num)
-            return 2 ** (result - 1) if 2 < result else result
-        return 0
+        match = self.match()
+        return 2 ** (match - 1) if 2 < match else match
 
     def match(self) -> int:
         return sum(map(lambda win_num: self.numbers.count(win_num), self.winning_numbers))
