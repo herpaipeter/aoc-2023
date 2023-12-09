@@ -25,28 +25,19 @@ class Day05(AocSolver):
                 min_location = mapped
         return min_location
 
-
     def part2(self, data) -> Any:
-        min_location = sys.maxsize
         merged_maps = data.merge_range_maps()
-        merged_maps.ranges.sort(key = lambda n: n.map_to)
+        merged_maps.ranges.sort(key=lambda n: n.map_to)
         seed_ranges = []
         for i in range(int(len(data.seeds) / 2)):
             seed_ranges.append(SeedRange(data.seeds[2 * i], data.seeds[2 * i] + data.seeds[2 * i + 1] - 1))
+        seed_ranges.sort(key=lambda s: s.start)
         for lr in merged_maps.ranges:
-            local_min_location = sys.maxsize
-            for sr in seed_ranges:
-                if (sr.start <= lr.map_from <= sr.end):
-                    local_min_location = lr.map_to
-                    break
-                elif (lr.map_from <= sr.start < lr.map_from + lr.length):
-                    local_min_location = lr.map_to + sr.start - lr.map_from
-                    break
-            if local_min_location < min_location:
-                min_location = local_min_location
-        return min_location
-        #too high: 36826209
-        #not good: 1908646
+            for ri in range(lr.length):
+                for sr in seed_ranges:
+                    if sr.start <= lr.map_from + ri <= sr.end:
+                        return lr.map_to + ri
+        return sys.maxsize
 
     def parseBlocks(self, lines):
         return lines.split("\n\n")
@@ -59,9 +50,7 @@ class Day05(AocSolver):
         for line in lines.split("\n")[1:]:
             range_values = list(map(int, line.split(" ")))
             range_map.ranges.append(Range(range_values[1], range_values[0], range_values[2]))
-        #range_map.ranges.sort()
         return range_map
 
     def parseMaps(self, maps_list):
         return list(map(self.parseMap, maps_list))
-

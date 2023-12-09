@@ -16,18 +16,16 @@ def test_parse_seeds():
     assert result == [79, 14, 55, 13]
 
 
-@pytest.mark.skip
 def test_parse_map():
     result = day05.Day05().parseMap("seed-to-soil map:\n50 98 2\n52 50 48")
-    assert result == RangeMap([Range(50, 52, 48), Range(98, 50, 2)])
+    assert result == RangeMap([Range(98, 50, 2), Range(50, 52, 48)])
 
 
-@pytest.mark.skip
 def test_parse_maps():
     result = day05.Day05().parseMaps(
         ["seed-to-soil map:\n50 98 2\n52 50 48", "soil-to-fertilizer map:\n0 15 37\n37 52 2\n39 0 15"])
-    assert result == [RangeMap([Range(50, 52, 48), Range(98, 50, 2)]),
-                      RangeMap([Range(0, 39, 15), Range(15, 0, 37), Range(52, 37, 2)])]
+    assert result == [RangeMap([Range(98, 50, 2), Range(50, 52, 48)]),
+                      RangeMap([Range(15, 0, 37), Range(52, 37, 2), Range(0, 39, 15)])]
 
 
 def test_range_contains():
@@ -110,17 +108,16 @@ def test_merge_to_range_map():
     range_map = RangeMap([Range(98, 50, 2), Range(50, 52, 48)])
     range_right = Range(1, 2, 10)
     result = range_map.merge(range_right)
-    assert result == [Range(98, 50, 2), Range(50, 52, 48), Range(1, 2, 10)]
+    assert result == ([Range(98, 50, 2), Range(50, 52, 48)], [Range(1, 2, 10)], [])
 
 
 def test_merge_to_range_map_intersect():
     range_map = RangeMap([Range(98, 50, 2), Range(50, 52, 48)])
     range_right = Range(40, 60, 20)
     result = range_map.merge(range_right)
-    assert sorted(result) == sorted([Range(map_from=98, map_to=70, length=2),
-                      Range(map_from=58, map_to=60, length=40),
-                      Range(map_from=50, map_to=72, length=8),
-                      Range(map_from=40, map_to=60, length=10)])
+    assert result == ([Range(map_from=58, map_to=60, length=40)],
+                      [Range(map_from=40, map_to=60, length=10)],
+                      [Range(map_from=98, map_to=70, length=2), Range(map_from=50, map_to=72, length=8)])
 
 
 @pytest.fixture
