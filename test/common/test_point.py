@@ -38,3 +38,7 @@ def test_point_add_up_direction():
 
 def test_point_add_down_direction():
     assert Point(2, 2) == Point(1, 2) + Direction.DOWN
+
+
+def test_point_minus_down_direction():
+    assert Point(0, 2) == Point(1, 2) - Direction.DOWN

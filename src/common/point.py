@@ -19,6 +19,15 @@ class Point:
             return Point(self.row + other, self.col + other)
         raise NotImplementedError
 
+    def __sub__(self, other):
+        if isinstance(other, Point):
+            return Point(self.row - other.row, self.col - other.col)
+        elif isinstance(other, Direction):
+            return Point(self.row - other.value.row, self.col - other.value.col)
+        elif isinstance(other, int):
+            return Point(self.row - other, self.col - other)
+        raise NotImplementedError
+
     def __mul__(self, other):
         if isinstance(other, int):
             return Point(self.row * other, self.col * other)
