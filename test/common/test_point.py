@@ -42,3 +42,15 @@ def test_point_add_down_direction():
 
 def test_point_minus_down_direction():
     assert Point(0, 2) == Point(1, 2) - Direction.DOWN
+
+
+def test_manhattan_distance_0():
+    assert 0 == Point(1, 1).m_dist(Point(1, 1))
+
+
+def test_shortest_path_len_between_1():
+    assert 1 == Point(1, 1).m_dist(Point(1, 2))
+
+
+def test_shortest_path_len_between_more():
+    assert 9 == Point(6, 1).m_dist(Point(11, 5))

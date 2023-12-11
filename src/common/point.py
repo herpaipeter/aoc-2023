@@ -36,6 +36,12 @@ class Point:
     def __neg__(self):
         return Point(-self.row, -self.col)
 
+    def m_dist(self, other):
+        # Manhattan distance from other point
+        if isinstance(other, Point):
+            return abs(self.col - other.col) + abs(self.row - other.row)
+        raise NotImplementedError
+
 
 class Direction(Enum):
     RIGHT = Point(0, 1)
