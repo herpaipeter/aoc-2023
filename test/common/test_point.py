@@ -16,8 +16,12 @@ def test_point_add_float():
         Point(1, 1) + 2.4
 
 
-def test_point_multi_int():
+def test_point_multi_int_right():
     assert Point(2, 2) == Point(1, 1) * 2
+
+
+def test_point_multi_int_left():
+    assert Point(2, 2) == 2 * Point(1, 1)
 
 
 def test_point_negate():

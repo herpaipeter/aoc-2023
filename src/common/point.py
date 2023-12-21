@@ -33,6 +33,11 @@ class Point:
             return Point(self.row * other, self.col * other)
         raise NotImplementedError
 
+    def __rmul__(self, other):
+        if isinstance(other, int):
+            return Point(self.row * other, self.col * other)
+        raise NotImplementedError
+
     def __neg__(self):
         return Point(-self.row, -self.col)
 
@@ -48,3 +53,13 @@ class Direction(Enum):
     LEFT = Point(0, -1)
     UP = Point(-1, 0)
     DOWN = Point(1, 0)
+
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return Point(self.value.row * other, self.value.col * other)
+        raise NotImplementedError
+
+    def __rmul__(self, other):
+        if isinstance(other, int):
+            return Point(self.value.row * other, self.value.col * other)
+        raise NotImplementedError
